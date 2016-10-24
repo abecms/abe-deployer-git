@@ -1,0 +1,15 @@
+{
+  "name": "abe-deployer-git",
+  "version": "0.0.1",
+  "description": "An Abe deployer for Git",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "es6-promise": "^4.0.5",
+    "moment": "^2.13.0"
+  }
+}
