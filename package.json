@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "es6-promise": "^4.0.5",
-    "moment": "^2.13.0"
+    "moment": "^2.13.0",
+    "babel-preset-es2015": "^6.9.0"
   }
 }
