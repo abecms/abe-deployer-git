@@ -1,12 +1,12 @@
-const Promise = require('es6-promise').Promise
-const path = require('path')
-const moment = require('moment')
-const spawn = require('child_process').spawn
+var Promise = require('es6-promise').Promise
+var path = require('path')
+var moment = require('moment')
+var spawn = require('child_process').spawn
 
 function gitsync(abe) {
   this.deployPath = path.join(abe.config.root, abe.config.publish.url);
   if(abe.config.deployers && abe.config.deployers.git){
-    let elt = abe.config.deployers.git
+    var elt = abe.config.deployers.git
     this.repository = (elt.hasOwnProperty("repository"))?elt.repository:""
     this.branch = (elt.hasOwnProperty("branch"))?elt.branch:"master"
     this.username = (elt.hasOwnProperty("username"))?elt.username:""
@@ -15,15 +15,15 @@ function gitsync(abe) {
 }
 
 gitsync.prototype.git = function() {
-  let len = arguments.length
-  let args = new Array(len)
-  let deployPath = this.deployPath
-  for (let i = 0; i < len; i++) {
+  var len = arguments.length
+  var args = new Array(len)
+  var deployPath = this.deployPath
+  for (var i = 0; i < len; i++) {
     args[i] = arguments[i];
   }
 
-  let p = new Promise(function(resolve, reject) {
-    let child = spawn('git', args, {cwd: deployPath});
+  var p = new Promise(function(resolve, reject) {
+    var child = spawn('git', args, {cwd: deployPath});
 
     child.stdout.on('data', function (data) {
         resolve
