@@ -5,7 +5,7 @@ var fs = require('fs');
 var gitsync = require('../modules/gitsync');
 
 var hooks = {
-  afterPublish: function (result, abe) {
+  afterPublish: function (postPath, result, abe) {
     if(abe.config.deployers && abe.config.deployers.git && abe.config.deployers.git.active === true){
 
       var git = new gitsync(abe)
