@@ -1,10 +1,13 @@
 # abe-deployer-git
 An Abe deployer for your Git repositories and static websites
 
-##Introduction
+## Introduction
 This plugin is a Git deployer for your Abe blog. Once you've created your git repository, just install this plugin with Abe and fill in the parameters.
 
 Everytime you'll publish/unpublish a content, your blog will be sync'ed 
+
+## Installation
+abe install abecms/abe-deployer-git
 
 ## Configuration
 In abe.json, you must have this entry:
