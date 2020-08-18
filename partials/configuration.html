@@ -1,0 +1,104 @@
+{{#extend "layout"}}
+  {{#content "breadcrumbs"}}
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item">Admin</li>
+      <li class="breadcrumb-item active">Git configuration</li>
+  </ol>
+  {{/content}}
+
+  {{#content "body"}}
+            <div class="manager-right tab">
+              <div class="manager-tab">
+                <div class="text-uppercase">
+                  Git configuration
+                </div>
+                <div class="manager-tab-content">
+                  <div class="checkbox">
+                    <label><input type="checkbox" name="git_active" id="git_active" {{#if @root.config.deployers.surge.active}}checked="checked"{{/if}}>Active</label>
+                  </div>
+                  <div class="input-group">
+                    <div class="label-input">Repository</div>
+                    <input type="text" name="repository" id="repository" value="{{@root.config.deployers.git.repository}}" class="form-control form-edit">
+                  </div>
+                  <div class="input-group">
+                    <div class="label-input">Branch</div>
+                    <input type="text" name="branch" id="branch" value="{{@root.config.deployers.git.branch}}" class="form-control form-edit">
+                  </div>
+                  <div class="input-group">
+                    <div class="label-input">Username</div>
+                    <input type="text" name="username" id="username" value="{{@root.config.deployers.git.username}}" class="form-control form-edit">
+                  </div>
+                  <div class="input-group">
+                    <div class="label-input">Email</div>
+                    <input type="text" name="email" id="email" value="{{@root.config.deployers.git.email}}" class="form-control form-edit">
+                  </div>
+                  <div class="input-group">
+                    <div class="label-input">Relative Path (if you want to git only the html site, don't enter any value here. If you want to git your whole Abe project, enter '.'</div>
+                    <input type="text" name="relativePath" id="relativePath" value="{{@root.config.deployers.git.relativePath}}" class="form-control form-edit">
+                  </div>
+                  <br>
+                  <button class="btn btn-info" id="save">
+                    <span>
+                      Save
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="notif" id="notif">
+      <a class="notif-close" id="notif-close" href="#">x</a>
+      Configuration saved successfully !
+    </div>
+
+{{/content}}
+
+{{#content "bottom-scripts" mode="append"}}
+  <script type="text/javascript" src="/abecms/libs/standalone.min.js"></script>
+  <script type="text/javascript" src="/abecms/libs/moment-with-locales.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.2/js/swiper.js"></script>
+  <script type="text/javascript" src="/abecms/libs/moment-with-locales.js"></script>
+  <script type="text/javascript" src="/abecms/libs/stream-home.js"></script>
+  <script>
+    var btn = document.getElementById('save');
+    var repository = document.getElementById('repository');
+    var branch = document.getElementById('branch');
+    var username = document.getElementById('username');
+    var email = document.getElementById('email');
+    var relativePath = document.getElementById('relativePath');
+    var active = document.getElementById('git_active');
+    var isSaving = false;
+    var saveUrl = 'configuration';
+    var notif = document.getElementById('notif');
+    var notifClose = document.getElementById('notif-close');
+
+    notifClose.addEventListener('click', function (e) {
+      e.preventDefault();
+      notif.classList.remove('on');
+    });
+
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      if(isSaving) return;
+      isSaving = true;
+      btn.classList.add('disabled');
+
+      var request = new XMLHttpRequest();
+      request.open('GET', saveUrl + "?active=" + active.checked + "&repository=" + repository.value + "&branch=" + branch.value + "&username=" + username.value + "&email=" + email.value + "&relativePath=" + relativePath.value);
+      request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+      request.onreadystatechange = function() {
+        if(request.readyState == 4 && request.status == 200) {
+          setTimeout(function () { btn.classList.remove('disabled'); }, 250);
+          notif.classList.add('on');
+          isSaving = false;
+          setTimeout(function () { notif.classList.remove('on'); }, 2500);
+        }
+      }
+      request.send();
+    });
+  </script>
+{{/content}}
+{{/extend}}

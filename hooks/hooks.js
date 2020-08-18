@@ -10,6 +10,10 @@ var hooks = {
 
       var git = new gitsync(abe)
       var baseDir = path.join(abe.config.root, abe.config.publish.url);
+      if (abe.config.deployers.git.relativePath && abe.config.deployers.git.relativePath != '') {
+        baseDir = path.join(abe.config.root, abe.config.deployers.git.relativePath);
+      }
+
       var deployDir = path.join(baseDir, '.git');
 
       fs.exists(deployDir, (exists) => {
@@ -34,6 +38,9 @@ var hooks = {
 
       var git = new gitsync(abe)
       var baseDir = path.join(abe.config.root, abe.config.publish.url);
+      if (abe.config.deployers.git.relativePath && abe.config.deployers.git.relativePath != '') {
+        baseDir = path.join(abe.config.root, abe.config.deployers.git.relativePath);
+      }
       var deployDir = path.join(baseDir, '.git');
 
       fs.exists(deployDir, (exists) => {

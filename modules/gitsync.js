@@ -10,7 +10,8 @@ function gitsync(abe) {
     this.repository = (elt.hasOwnProperty("repository"))?elt.repository:""
     this.branch = (elt.hasOwnProperty("branch"))?elt.branch:"master"
     this.username = (elt.hasOwnProperty("username"))?elt.username:""
-    this.email = (elt.hasOwnProperty("email"))?elt.email:""
+    this.email = (elt.hasOwnProperty("email")) ? elt.email : ""
+    this.relativePath = (elt.hasOwnProperty("relativePath"))?elt.relativePath:""
   }
 }
 
@@ -43,7 +44,7 @@ gitsync.prototype.git = function() {
 }
 
 gitsync.prototype.publish = function(repo) {
-  
+
   return this.add().then(function(data){
     return this.commit().then(function(){
       return this.push(repo).then(function(data){
@@ -57,13 +58,13 @@ gitsync.prototype.publish = function(repo) {
 }
 
 gitsync.prototype.add = function() {
-  
+
   return this.git('add', '-A')
 }
 
 gitsync.prototype.commit = function() {
   var message = 'Site updated: ' + moment().format('YYYY-MM-DD HH:mm:ss');
-  
+
   return this.git('commit', '-m', message)
 }
 
