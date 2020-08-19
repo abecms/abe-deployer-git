@@ -45,16 +45,20 @@ gitsync.prototype.git = function() {
 
 gitsync.prototype.publish = function(repo) {
 
-  return this.add().then(function(data){
-    return this.commit().then(function(){
-      return this.push(repo).then(function(data){
+  return this.pull().then(function(data){
+    return this.add().then(function(data){
+      return this.commit().then(function(){
+        return this.push(repo).then(function(data){
+        }.bind(this)).catch(function(e){
+          console.log('error: ' + e);
+        })
       }.bind(this)).catch(function(e){
         console.log('error: ' + e);
       })
-    }.bind(this)).catch(function(e){
-      console.log('error: ' + e);
-    })
-  }.bind(this))
+    }.bind(this))
+  }.bind(this)).catch(function(e){
+    console.log('error: ' + e);
+  })
 }
 
 gitsync.prototype.add = function() {
@@ -70,6 +74,10 @@ gitsync.prototype.commit = function() {
 
 gitsync.prototype.push = function() {
   return this.git('push', '-u', this.repository, 'HEAD:'+this.branch, '--force')
+}
+
+gitsync.prototype.pull = function() {
+  return this.git('pull')
 }
 
 gitsync.prototype.setup = function () {
