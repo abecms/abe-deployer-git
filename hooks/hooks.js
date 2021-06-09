@@ -33,7 +33,7 @@ var hooks = {
 
     return result;
   },
-  afterUnpublish: function (pathFile, json, abe) {
+  afterUnpublish: function (pathFile, postPath, json, abe) {
     if(abe.config.deployers && abe.config.deployers.git && abe.config.deployers.git.active){
 
       var git = new gitsync(abe)
